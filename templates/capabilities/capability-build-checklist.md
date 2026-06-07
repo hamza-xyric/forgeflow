@@ -22,5 +22,5 @@
 - [ ] **Reusable across projects?** If yes, note it for plugin packaging (§C11.6); if no, make it so or scope it clearly.
 
 ## Record
-- Path: `<.claude/skills|commands|agents/...>`
+- Path: `<.claude/skills|commands|agents/...>` and/or `<.agents/skills/...>` / `<.codex/...>` for Codex
 - Memory fact written (capability learning): <link/id>

@@ -12,10 +12,10 @@ A reusable, **domain-agnostic** method for getting the most out of AI models on 
 | `START-HERE.md` | **One-screen router + file map** — read this first. |
 | `FRAMEWORK.md` | **The master document.** Part A = the 8-move method (project-agnostic). Part B = the Balencia pipeline (worked case study, illustrative paths). Part C = on-ramp (§C1), **Capability Engineering** (§C11 — build skills/commands/teams/subagents/hooks/MCP), feedback loops, failure-mode playbook, batch-sizing, ownership, quality mechanics. |
 | `templates/` | **Blank** copy-paste scaffolds for every artifact the method uses, with `<PLACEHOLDER>` tokens. Build *new* artifacts from these. |
-| `templates/capabilities/` | Blank Claude Code syntax for the Equip layer: `SKILL.md`, `slash-command.md`, `subagent.md`, `hooks.settings.json`, `.mcp.json`, `capability-build-checklist.md`, `plugin.json`. |
-| `starter/` | **Working** ready-to-drop payload — copy its contents to a new project's root to activate: a self-activating `CLAUDE.md`, the `research-first` skill, the `/handoff` · `/start-handoff` · `/onboard` commands, and a committed `memory/` scaffold. |
-| `verify/portability-check.mjs` | Self-check: scans a project for any file the framework names but doesn't carry, a missing `CLAUDE.md`, or unfilled placeholders. |
-| `CLAUDE.md` | Orients an agent that opens the framework folder itself. |
+| `templates/capabilities/` | Blank dual-harness syntax for the Equip layer: Claude `.claude/*`, Codex `.agents/*` / `.codex/*`, hooks, MCP, plugins, and the capability build checklist. |
+| `starter/` | **Working** ready-to-drop payload — copy its contents to a new project's root to activate: self-activating `CLAUDE.md` and `AGENTS.md`, Claude commands, Codex skills, shared `runbooks/`, the `research-first` skill, and committed `memory/`. |
+| `verify/portability-check.mjs` | Self-check: scans a project for required Claude/Codex starter files, runbooks, missing handoff sections, stale handoff paths, and unfilled placeholders. |
+| `CLAUDE.md` / `AGENTS.md` | Orient agents that open the framework folder itself. |
 | `docs/meta/` | Internal meta-docs (Forgeflow's own self-review + the implementation prompt that built v1.0.0). Transparency only — not needed to use it. |
 | `VERSION` · `CHANGELOG.md` | Which framework version/method seeded a project. |
 
@@ -37,8 +37,8 @@ rm -rf framework/.git            # detach from Forgeflow's history; framework/ n
 cp -R framework/starter/. .
 
 # 3. Run the guided on-ramp — it walks §C1 interactively and writes your artifacts:
-#    CLAUDE.md → research-first findings → FOUNDING-BRIEF (via the questionnaire) →
-#    equip capability gaps → domain models → empty ledgers → batch plan
+#    CLAUDE.md + AGENTS.md → research-first findings → FOUNDING-BRIEF →
+#    capability gaps → domain models → ledgers → batch plan → first handoff
 /onboard
 
 # 4. Sanity-check that nothing the framework names is left dangling
@@ -47,9 +47,9 @@ node framework/verify/portability-check.mjs .
 
 > All internal paths assume Forgeflow lives at `framework/` in your project — keep that folder name.
 
-**Returning to a project:** run `/start-handoff` — it resumes from `.claude/plans/next-session-handoff.md`, the kickoff your last session left.
+**Returning to a project:** run `/start-handoff` in Claude, or use the `forgeflow-start-handoff` Codex skill. Both resume from `plans/next-session-handoff.md` (legacy `.claude/plans/next-session-handoff.md` is read only as a fallback).
 
-**Per session (the survivability loop — see §C11):** do *one bounded batch* → run the verify gate → commit by explicit path → append to the ledger → ✋ checkpoint → `/handoff` → `/clear`.
+**Per session (the survivability loop — see §C11):** do *one bounded batch* → run the verify gate → update ledgers/progress/memory → write `plans/next-session-handoff.md` → checkpoint → clear or start fresh.
 
 ## The non-negotiables
 
@@ -67,6 +67,7 @@ node framework/verify/portability-check.mjs .
 Forgeflow is a method, not a dependency — there's nothing to `npm install`. To roll it out:
 
 - **Adopt it per project** with the on-ramp above. Keep `framework/` committed in each project so the method (and its version) travels with the code.
+- **Use either Claude or Codex** against the same foundation. Claude uses `CLAUDE.md` + `.claude/commands`; Codex uses `AGENTS.md` + `.agents/skills`; both share `runbooks/`, `memory/`, ledgers, and `plans/next-session-handoff.md`.
 - **Improve the method itself** by opening a PR against this repo (branch → change → PR). See `CONTRIBUTING.md`. Bumps follow SemVer in `VERSION` + `CHANGELOG.md`, so any project can trace which version seeded it.
 - **License:** MIT — use it freely, internally or publicly.
 

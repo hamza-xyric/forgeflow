@@ -11,6 +11,9 @@
 - Session cap: <N items> (see FRAMEWORK.md §C4 sizing)
 - Reviewed date / URL / evidence path: <…>
 - Build gate this batch? <yes (every 3rd + foundation) / no — run check always>
+- Active root: `<path>`
+- Source links: `<active docs/stories/work items>`
+- Handoff status target: <READY | READY WITH WAIVERS | BLOCKED>
 
 ## Batch summary
 - Ship-ready: <items>
@@ -38,11 +41,18 @@
 |----------|----------|----------|----------|----------------|--------|
 | <finding or "No major findings"> |  |  |  |  |  |
 
+| Owner | Blocked work | Next action | Closure condition |
+|-------|--------------|-------------|-------------------|
+| <owner> | <blocked work or none> | <action> | <observable condition> |
+
 **Decision:** ship-ready | must-fix | rework | needs-user-decision
 
 ## Completion gate (before status `closed`)
 - [ ] Every worked item has a full notes + scores section in THIS file
 - [ ] `<PATH/findings-ledger.md>` updated for all findings
+- [ ] `<PATH/deferred-decisions.md>` updated for open decisions
+- [ ] `<PATH/accepted-improvements.md>` updated for accepted improvements
 - [ ] `<PATH/_progress.md>` updated
 - [ ] Verify command run and result recorded: `<VERIFY_COMMAND>` → <result>
 - [ ] Deferred items + open questions listed in the summary
+- [ ] `plans/next-session-handoff.md` updated with status, blockers, drift, waivers, dirty-worktree cautions, and exact next slice
