@@ -5,9 +5,10 @@
 // a copied framework "a map without territory":
 //   1. Required Claude + Codex starter files exist.
 //   2. Shared runbooks exist for every shipped workflow.
-//   3. No unfilled placeholder tokens remain in committed markdown artifacts.
-//   4. Any present handoff has the required operational sections.
-//   5. Docs do not point only to the legacy .claude/plans handoff path.
+//   3. START-HERE.md names every shipped workflow.
+//   4. No unfilled placeholder tokens remain in committed markdown artifacts or starter files.
+//   5. Any present handoff has the required operational sections.
+//   6. Docs do not point only to the legacy .claude/plans handoff path.
 //
 // Usage:
 //   node framework/verify/portability-check.mjs [target-dir]
@@ -29,6 +30,8 @@ if (!existsSync(target) || !statSync(target).isDirectory()) {
 
 const WORKFLOWS = [
   'onboard',
+  'adopt-existing-project',
+  'upgrade-framework',
   'handoff',
   'start-handoff',
   'start-batch',
@@ -85,6 +88,27 @@ for (const rel of REQUIRED_FILES) {
   if (!existsSync(join(target, rel))) findings.push(`missing required file: ${rel}`);
 }
 
+function readText(path) {
+  try { return readFileSync(path, 'utf8'); } catch { return null; }
+}
+
+const startHereCandidates = [
+  join(target, 'START-HERE.md'),
+  join(target, 'framework/START-HERE.md'),
+  join(target, '../START-HERE.md'),
+];
+const startHerePath = startHereCandidates.find((p) => existsSync(p));
+if (!startHerePath) {
+  findings.push('missing START-HERE.md for workflow file-map check');
+} else {
+  const startHere = readText(startHerePath) ?? '';
+  for (const workflow of WORKFLOWS) {
+    if (!startHere.includes(workflow)) {
+      findings.push(`START-HERE.md file map does not reference shipped workflow: ${workflow}`);
+    }
+  }
+}
+
 const canonicalHandoffPath = join(target, CANONICAL_HANDOFF);
 const legacyHandoffPath = join(target, LEGACY_HANDOFF);
 if (existsSync(legacyHandoffPath) && !existsSync(canonicalHandoffPath)) {
@@ -115,8 +139,8 @@ checkHandoff(CANONICAL_HANDOFF);
 checkHandoff(LEGACY_HANDOFF);
 
 function checkMarkdown(full, rel) {
-  let text;
-  try { text = readFileSync(full, 'utf8'); } catch { return; }
+  const text = readText(full);
+  if (text === null) return;
   const prose = stripCode(text);
 
   const hits = prose.match(PLACEHOLDER_RE);
@@ -146,6 +170,29 @@ function walk(dir) {
   }
 }
 walk(target);
+
+function checkStarterPlaceholders(starterRoot, label) {
+  function walkStarter(dir) {
+    let entries;
+    try { entries = readdirSync(dir, { withFileTypes: true }); } catch { return; }
+    for (const e of entries) {
+      if (e.isDirectory()) {
+        if (SKIP_DIRS.has(e.name)) continue;
+        walkStarter(join(dir, e.name));
+      } else if (e.isFile() && SCAN_EXT.has(extname(e.name))) {
+        const full = join(dir, e.name);
+        const rel = `${label}/${relative(starterRoot, full) || e.name}`;
+        checkMarkdown(full, rel);
+      }
+    }
+  }
+  walkStarter(starterRoot);
+}
+
+const projectStarter = join(target, 'framework/starter');
+if (existsSync(projectStarter) && statSync(projectStarter).isDirectory()) {
+  checkStarterPlaceholders(projectStarter, 'framework/starter');
+}
 
 const label = target === '.' ? 'project root' : target;
 if (findings.length === 0) {

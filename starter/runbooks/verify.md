@@ -4,15 +4,17 @@
 
 - Root and lane verification commands.
 - `hard-gates.md`, `rubric.md`, active batch file, and source hierarchy.
+- The project's filled verification matrix, or `framework/templates/verification-matrix.md` as the scaffold for choosing gates.
 - Current worktree state.
 
 ## Steps
 
-1. Run deterministic checks first: lint, typecheck, tests, contract checks, route checks, asset checks, doc checks, or project-specific gates.
-2. Run framework portability checks when foundation files changed: `node framework/verify/portability-check.mjs .`.
-3. Check actual hard gates where possible: active root consistency, no archived-source references, one active next step, required story/work-item links, placeholders, missing evidence, missing handoff sections, stale/conflicting docs.
-4. Record exact command, result, date, and relevant output summary in the active batch, progress, and handoff.
-5. If known drift remains, mark status `READY WITH WAIVERS` or `BLOCKED`; a passing command alone is not enough.
+1. Select gates from the verification matrix for each touched change type: backend/API, frontend/UI, DB migration, docs/framework, AI/data provenance, auth/security, and health/safety.
+2. Run deterministic checks first: lint, typecheck, tests, contract checks, route checks, migration checks, provenance/eval checks, security scans, doc checks, or project-specific gates.
+3. Run framework portability checks when foundation files changed: `node framework/verify/portability-check.mjs .`.
+4. Check actual hard gates where possible: active root consistency, no archived-source references, one active next step, required story/work-item links, placeholders, missing evidence, missing handoff sections, stale/conflicting docs, and critical memory contradictions.
+5. Record exact command, result, date, relevant output summary, manual review lens, evidence location, and stop-condition status in the active batch, progress, and handoff.
+6. If known drift remains, mark status `READY WITH WAIVERS` or `BLOCKED`; a passing command alone is not enough.
 
 ## Expected Output
 

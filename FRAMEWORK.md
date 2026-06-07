@@ -12,10 +12,10 @@ This document has three parts:
 
 Beside this guide sit two folders and a self-check:
 - **`framework/templates/`** — copy-paste **blank** scaffolds (with `<PLACEHOLDER>` tokens) for every artifact named here.
-- **`framework/starter/`** — a **working**, ready-to-drop dual-harness payload: self-activating `CLAUDE.md` and `AGENTS.md`, Claude commands, Codex skills, shared `runbooks/`, the `research-first` skill, and committed `memory/`.
+- **`framework/starter/`** — a **working**, ready-to-drop dual-harness payload: self-activating `CLAUDE.md` and `AGENTS.md`, Claude commands, Codex skills, shared `runbooks/`, the `research-first` skill, adoption/upgrade workflows, and committed `memory/`.
 - **`framework/verify/portability-check.mjs`** — scans a project for required Claude/Codex files, runbooks, handoff sections, stale handoff paths, and placeholders.
 
-To start a new project, copy the whole folder as one unit and run the guided on-ramp: `cp -r framework <new-project>/`, activate the `starter/` payload at the project root, then `/onboard` in Claude or `forgeflow-onboard` in Codex. See `framework/START-HERE.md` (one screen) and `framework/README.md` for the quickstart.
+To start a new project, copy the whole folder as one unit and run the guided on-ramp: `cp -r framework <new-project>/`, activate the `starter/` payload at the project root, then `/onboard` in Claude or `forgeflow-onboard` in Codex. For a mature project that already has root guidance, use `/adopt-existing-project` or `forgeflow-adopt-existing-project` so local rules are merged, not overwritten. See `framework/START-HERE.md` (one screen) and `framework/README.md` for the quickstart.
 
 ## What this folder assumes, ships, and expects you to build
 
@@ -25,7 +25,7 @@ The framework is a *method that now carries its own starting tools*. Concretely:
 |---|---|
 | **Assumes** (you already have) | Claude Code and/or Codex + git. Nothing else. |
 | **Ships** (travels in this folder, ready to use) | this guide (`FRAMEWORK.md`); blank artifact **templates** (`templates/`); a **working dual-harness payload** (`starter/` — `CLAUDE.md`, `AGENTS.md`, Claude commands, Codex skills, shared `runbooks/`, `research-first`, committed `memory/`); the **portability self-check** (`verify/`). |
-| **You build** (per project, via `/onboard` or `forgeflow-onboard`) | your workspace map + source hierarchy (`CLAUDE.md` and `AGENTS.md`); your founding brief; your domain models; your project-specific skills/commands/teams; your ledgers, rubric, and batch plan. |
+| **You build** (per project, via `/onboard`, `/adopt-existing-project`, `forgeflow-onboard`, or `forgeflow-adopt-existing-project`) | your workspace map + source hierarchy (`CLAUDE.md` and `AGENTS.md`); your founding brief; your domain models; your project-specific skills/commands/teams; your ledgers, rubric, verification matrix, and batch plan. |
 
 So every capability this guide names is either **shipped** in `starter/` (pointed to inline below as "→ *Ships…*") or is something **you build** during the on-ramp — nothing dangles. The Balencia paths in Part B are **illustrative evidence** from the origin project; *your* project won't have them.
 
@@ -134,7 +134,7 @@ All of it rolls up into a **living, weighted-rubric grade report** with anti-inf
 
 **Verifier philosophy.** A useful verifier checks project truth, not just file existence. Where possible, verify: active root consistency, no archived-source references in active docs, exactly one active next step, required story/work-item links, placeholders, forbidden language, missing evidence, missing handoff sections, stale/conflicting active docs, and current hard-gate results. Passing a verifier is not enough if known drift exists; the handoff must say `READY`, `READY WITH WAIVERS`, or `BLOCKED`.
 
-**Apply outside UI/UX.** Backend: `lint + typecheck + tests + contract-verify` as the gate; reviewer personas = Security, Performance, API-contract, Operability. Research: reviewer personas = Methodologist, Skeptic (tries to refute each claim), Source-checker. Always: findings are evidence-backed and have owner, blocked work, next action, and closure condition. Templates: `templates/rubric.md`, `templates/hard-gates.md`, `templates/findings-ledger.md`, `templates/deferred-decisions.md`, `templates/accepted-improvements.md`, `templates/teams/`, `templates/verify/`.
+**Apply outside UI/UX.** Backend: `lint + typecheck + tests + contract-verify` as the gate; reviewer personas = Security, Performance, API-contract, Operability. Research: reviewer personas = Methodologist, Skeptic (tries to refute each claim), Source-checker. Always: findings are evidence-backed and have owner, blocked work, next action, and closure condition. Start from `templates/verification-matrix.md` to choose gates by change type, then add generic personas or optional domain packs from `templates/teams/packs/`. Templates: `templates/rubric.md`, `templates/hard-gates.md`, `templates/verification-matrix.md`, `templates/findings-ledger.md`, `templates/deferred-decisions.md`, `templates/accepted-improvements.md`, `templates/teams/`, `templates/verify/`.
 
 ---
 
@@ -269,12 +269,12 @@ The mechanics that make Part A executable on a new project. This is where the fr
 
 Do these **in order** before any production work. This is the single most important section for reuse — it is the start sequence the Balencia origin proves was decisive (the domain models were built *before* screens).
 
-1. **Write the workspace map first.** Create both `CLAUDE.md` and `AGENTS.md` at the repo root: what each directory is for, the active implementation root, active vs archived sources, the **Source-of-Truth Hierarchy** (ordered authorities + the explicit tie-breaker — decide *now* which file is "reality"), verification commands, closeout rules, and cross-cutting agent rules. Templates: `templates/CLAUDE.md`, `templates/AGENTS.md`.
+1. **Write the workspace map first.** For greenfield work, create both `CLAUDE.md` and `AGENTS.md` at the repo root. For existing projects, merge Forgeflow into the current files and preserve mature local rules. Capture what each directory is for, the active implementation root, active vs archived sources, the **Source-of-Truth Hierarchy** (ordered authorities + the explicit tie-breaker — decide *now* which file is "reality"), verification commands, closeout rules, and cross-cutting agent rules. Templates: `templates/CLAUDE.md`, `templates/AGENTS.md`; mature-project workflow: `starter/runbooks/adopt-existing-project.md`.
 2. **Ground (A0).** Run the research-first loop for the strategic questions; produce a cited findings doc. Don't skip this for "obvious" decisions.
 3. **Capture (A1).** Author the founding brief via the questionnaire; mark every decision **FINAL** or **OPEN**. Templates: `templates/FOUNDING-BRIEF.md`, `templates/VISION-QUESTIONNAIRE.md`.
 4. **Audit capability gaps & Equip (A2).** Now that you know the work, ask: *what will this project do repeatedly, and which proven practices do we lack?* Produce a short **capability-gaps list** (Skills / Commands / Teams / Hooks / MCP to build), and build the highest-leverage ones *before* production. At minimum: a research skill, the per-item method skill, reviewer-team personas, and handoff/start-batch/close-batch/verify workflows. (The starter already ships `research-first`, shared `runbooks/`, Claude command wrappers, and Codex `forgeflow-*` skill wrappers.) Use the build loop (research → extract → templatize → test → wire). Templates: `templates/capabilities/` + `capability-build-checklist.md`.
 5. **Build the foundational domain models** that downstream work depends on (Balencia built the RPG system + correlation matrix + feature inventory before screens). Name them in the source hierarchy.
-6. **Stand up empty infrastructure.** Create the empty ledgers (`_progress.md`, `findings-ledger.md`, `deferred-decisions.md`, `accepted-improvements.md`), the per-lane `AGENTS.md` files, the rubric and hard-gates, and the batch plan/index. Templates: the `templates/` folder, copied wholesale.
+6. **Stand up empty infrastructure.** Create the empty ledgers (`_progress.md`, `findings-ledger.md`, `deferred-decisions.md`, `accepted-improvements.md`), the per-lane `AGENTS.md` files, the rubric, hard-gates, verification matrix, and the batch plan/index. Templates: the `templates/` folder, copied wholesale.
 7. **Define the lanes and their order** (see C5). Only now begin Stage 1.
 
 **Discovery → first-build handoff contract.** Stage 1 may not begin until the handoff payload is complete: (a) the self-contained founding brief, (b) the list of FINAL decisions, (c) the source hierarchy with tie-breaker, (d) the active implementation root and active vs archived sources, (e) the initial batch table, (f) the anti-pattern list, (g) verification commands, and (h) `plans/next-session-handoff.md` with exactly one next slice. **Acceptance check:** every decision that blocks the first build is FINAL; all OPEN decisions are enumerated with owner, blocked work, next action, and closure condition.
@@ -483,7 +483,7 @@ Memory facts are point-in-time truths about *what the project is* — distinct f
 - **Active-state facts** — active root, current phase constraints, source hierarchy, and "future agents must not assume" warnings.
 - **Capability learnings** — "the research loop surfaced 3 approaches; we standardized on X."
 
-Rule: facts are point-in-time; **when memory contradicts live code/state, trust the live state and log the drift.**
+Rule: facts are point-in-time; **when memory contradicts live code/state, trust the live state and log the drift.** Mark facts that future agents must not violate with `risk_level: critical` or `critical_invariant: true`, especially auth identity fields, provenance boundaries, canonical verification commands, DB/security/privacy constraints, and health/safety rules. Critical memory still loses to verified live truth, but the contradiction must be logged as drift.
 
 → *Ships:* `framework/starter/memory/` — the `MEMORY.md` index, the per-fact frontmatter schema, the `[[name]]` linking convention, and one worked example per fact type — wired into `CLAUDE.md` and read by Codex through `AGENTS.md`. Prefer this committed memory over machine-local memories, which do not travel with the repo.
 

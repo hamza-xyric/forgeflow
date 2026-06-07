@@ -13,6 +13,8 @@ A reusable, **domain-agnostic** method for getting the most out of AI models on 
 | `FRAMEWORK.md` | **The master document.** Part A = the 8-move method (project-agnostic). Part B = the Balencia pipeline (worked case study, illustrative paths). Part C = on-ramp (§C1), **Capability Engineering** (§C11 — build skills/commands/teams/subagents/hooks/MCP), feedback loops, failure-mode playbook, batch-sizing, ownership, quality mechanics. |
 | `templates/` | **Blank** copy-paste scaffolds for every artifact the method uses, with `<PLACEHOLDER>` tokens. Build *new* artifacts from these. |
 | `templates/capabilities/` | Blank dual-harness syntax for the Equip layer: Claude `.claude/*`, Codex `.agents/*` / `.codex/*`, hooks, MCP, plugins, and the capability build checklist. |
+| `templates/verification-matrix.md` | Blank matrix for mapping change types to deterministic gates, manual review lenses, evidence, and stop conditions. |
+| `templates/teams/packs/` | Optional domain reviewer packs for backend/API, frontend/product, AI/data provenance, security/privacy, health/safety, and docs/research. |
 | `starter/` | **Working** ready-to-drop payload — copy its contents to a new project's root to activate: self-activating `CLAUDE.md` and `AGENTS.md`, Claude commands, Codex skills, shared `runbooks/`, the `research-first` skill, and committed `memory/`. |
 | `verify/portability-check.mjs` | Self-check: scans a project for required Claude/Codex starter files, runbooks, missing handoff sections, stale handoff paths, and unfilled placeholders. |
 | `CLAUDE.md` / `AGENTS.md` | Orient agents that open the framework folder itself. |
@@ -46,6 +48,10 @@ node framework/verify/portability-check.mjs .
 ```
 
 > All internal paths assume Forgeflow lives at `framework/` in your project — keep that folder name.
+
+**Adopting an existing mature project:** copy `framework/` into the repo, then use `/adopt-existing-project` in Claude or `forgeflow-adopt-existing-project` in Codex. This workflow merges Forgeflow into existing root `AGENTS.md` / `CLAUDE.md` and preserves local commands, gotchas, test patterns, auth conventions, DB rules, and lane rules.
+
+**Upgrading Forgeflow in a project:** use `/upgrade-framework` or `forgeflow-upgrade-framework`. The runbook compares `framework/VERSION` to upstream, lists changed files, preserves project-local `memory/`, `plans/`, ledgers, and root guidance, and migrates only framework/starter/template improvements.
 
 **Returning to a project:** run `/start-handoff` in Claude, or use the `forgeflow-start-handoff` Codex skill. Both resume from `plans/next-session-handoff.md` (legacy `.claude/plans/next-session-handoff.md` is read only as a fallback).
 

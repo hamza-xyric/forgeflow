@@ -33,6 +33,8 @@ These instructions are for Codex. They complement `CLAUDE.md`; both files descri
 
 - `research-first` — ground strategic, architectural, product, and market decisions in cited sources.
 - `forgeflow-onboard` — run the one-time project foundation setup.
+- `forgeflow-adopt-existing-project` — merge Forgeflow into a mature project without overwriting local rules.
+- `forgeflow-upgrade-framework` — upgrade the copied framework while preserving project-local truth.
 - `forgeflow-start-batch` / `forgeflow-close-batch` — open and close bounded work batches.
 - `forgeflow-audit-docs` — find stale, conflicting, or weak project docs.
 - `forgeflow-plan-story` / `forgeflow-create-work-items` — turn intent into traceable, verifiable slices.

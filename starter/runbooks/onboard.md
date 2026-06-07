@@ -6,6 +6,7 @@
 - `framework/templates/CLAUDE.md` and `framework/templates/AGENTS.md`.
 - `framework/templates/FOUNDING-BRIEF.md` and `framework/templates/VISION-QUESTIONNAIRE.md`.
 - `framework/templates/_progress.md`, `findings-ledger.md`, `deferred-decisions.md`, `accepted-improvements.md`, `rubric.md`, `hard-gates.md`, `batch-template.md`, and `next-session-handoff.md`.
+- `framework/templates/verification-matrix.md`.
 - Current repo layout from `git status --short`, `rg --files`, and any existing project docs.
 
 ## Steps
@@ -16,14 +17,14 @@
 4. Run the `research-first` workflow for build-shaping decisions. Persist findings in a cited doc and link it from the founding brief.
 5. Fill the founding brief from the questionnaire. Mark every build-blocking decision `FINAL` or `OPEN`; every `OPEN` item must name risk, owner, blocked work, and next action.
 6. Audit capability gaps. Decide which skills, commands, teams, hooks, MCP servers, or plugins are needed before production.
-7. Create lane guides, ledgers, rubric, hard gates, batch plan, and first `plans/next-session-handoff.md` from templates.
-8. Seed `memory/` with the source hierarchy, durable decisions, active root, verify commands, and known "do not assume" warnings.
+7. Create lane guides, ledgers, rubric, hard gates, verification matrix, batch plan, and first `plans/next-session-handoff.md` from templates.
+8. Seed `memory/` with the source hierarchy, durable decisions, active root, verify commands, critical invariants, and known "do not assume" warnings.
 
 ## Expected Output
 
 - Root `CLAUDE.md` and `AGENTS.md`.
 - A self-contained founding brief.
-- Progress, findings, deferred-decision, accepted-improvement, rubric, hard-gate, batch, and handoff artifacts.
+- Progress, findings, deferred-decision, accepted-improvement, rubric, hard-gate, verification-matrix, batch, and handoff artifacts.
 - Project-specific lane `AGENTS.md` files where specialized work happens.
 - Memory facts for source hierarchy, durable decisions, active root, and verification.
 
@@ -33,6 +34,7 @@
 - Stage 1 cannot start until every build-blocking decision is either `FINAL` or listed as an explicit blocker.
 - The root agent entrypoints agree with each other.
 - The source hierarchy answers: "If two sources disagree, which one is reality?"
+- Critical invariants in memory identify facts agents must not violate and explain how to verify them.
 
 ## Persistence / Closeout
 
