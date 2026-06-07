@@ -24,6 +24,8 @@ This project was bootstrapped with the **Forgeflow** — a reusable, domain-agno
 - **`research-first` skill** — ground decisions in 3+ cited sources before deciding (move A0).
 - **`/handoff` + `/start-handoff`** — the survivability loop: distill state to `plans/next-session-handoff.md`, `/clear`, then resume cold and correct.
 - **`/onboard`** — the one-time new-project on-ramp (`runbooks/onboard.md`, based on `FRAMEWORK.md` §C1).
+- **`/adopt-existing-project`** — merge Forgeflow into a mature project without overwriting existing project guidance.
+- **`/upgrade-framework`** — bring in newer framework/starter/template improvements while preserving project-local truth.
 - **`/start-batch`, `/close-batch`, `/audit-docs`, `/plan-story`, `/create-work-items`, `/verify`** — operational runbooks for bounded work, doc drift, planning, traceability, and gates.
 
 ## Memory (committed, travels with the repo)

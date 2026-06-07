@@ -2,6 +2,23 @@
 
 All notable changes to Forgeflow are recorded here. Versioning follows [SemVer](https://semver.org): **MAJOR** = a breaking change to the method or the artifact layout · **MINOR** = new capabilities/sections · **PATCH** = fixes and clarifications. A project records the version that seeded it (see `VERSION`) so its build is traceable to a method.
 
+## 1.2.0 — 2026-06-07
+
+Existing-project adoption upgrade: Forgeflow now handles mature repos that already have project-specific Claude/Codex guidance, and adds explicit upgrade, verification, memory, domain-review, and docs-drift mechanics.
+
+### Added
+- `starter/runbooks/adopt-existing-project.md`, `/adopt-existing-project`, and `forgeflow-adopt-existing-project` for merging Forgeflow into mature projects without overwriting existing root `AGENTS.md` / `CLAUDE.md`.
+- `starter/runbooks/upgrade-framework.md`, `/upgrade-framework`, and `forgeflow-upgrade-framework` for comparing versions, preserving project-local truth, and migrating framework/starter/template improvements.
+- `templates/verification-matrix.md` with change-type rows for backend/API, frontend/UI, DB migration, docs/framework, AI/data provenance, auth/security, and health/safety.
+- Optional domain reviewer packs under `templates/teams/packs/`.
+
+### Changed
+- Memory schema now includes `risk_level` and `critical_invariant` conventions for facts future agents must not violate.
+- Docs audit guidance now requires active docs, archived docs, and the tie-breaker source, with stronger checks for dated plans/logs being mistaken for live truth.
+- Verification runbook now starts from the verification matrix and records manual-review lens, evidence location, and stop-condition status.
+- `START-HERE.md`, `README.md`, and team docs now reference the new workflows, matrix, and packs.
+- `verify/portability-check.mjs` now includes the new shipped workflows, checks `START-HERE.md` coverage, and scans shipped starter files for placeholders from activated project roots.
+
 ## 1.1.0 — 2026-06-07
 
 Dual-harness operations upgrade: Forgeflow now ships useful foundations for both Claude Code and Codex, and the operational artifacts force stronger handoffs, ledgers, verification, and multi-agent review.

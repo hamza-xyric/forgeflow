@@ -17,9 +17,12 @@ Keep this index to **one line per fact**:
   metadata:
     type: user | feedback | project | reference
     status: active | stale | historical
+    risk_level: normal | high | critical
+    critical_invariant: false
     last_verified: YYYY-MM-DD
   ---
   ```
+- Set `risk_level: critical` or `critical_invariant: true` for facts future agents must not violate: auth identity fields, tenant boundaries, provenance boundaries, canonical verification commands, security constraints, DB migration rules, health/safety boundaries, or other production non-negotiables.
 - **Body:** state the fact plainly. For `feedback` and `project` facts, include **Why**, **How to apply**, and **Verify before relying** lines.
 - **Linking:** link related facts with `[[their-name]]`.
 - **Naming convention:** prefix the filename with the type, e.g. `project_source-hierarchy.md`, `feedback_verify-before-done.md`.
@@ -37,6 +40,7 @@ Save:
 - Durable decisions and their source of authority.
 - Current phase, active app/root, and source hierarchy when they are stable enough to guide future sessions.
 - Verification lessons that future agents must repeat.
+- Critical invariants that would cause auth, provenance, data integrity, security, privacy, safety, or production-readiness harm if violated.
 - Known blockers, stale-doc warnings, and "future agents must not assume" facts when they will recur.
 
 Do not save:
@@ -47,6 +51,8 @@ Do not save:
 ## The Honesty Rule
 
 Facts are **point-in-time**. When memory contradicts live code, live docs, git, or the current source hierarchy, trust the live state and log the drift in the relevant ledger or handoff. Then mark the memory `stale` or update it with fresh verification evidence.
+
+Critical memory is not magic. Even a `critical_invariant` loses to verified live code and the declared source hierarchy, but contradictions must be treated as drift: record what disagreed, which source won, who owns the update, and what verification proved the new truth.
 
 ## Index
 
